@@ -47,29 +47,9 @@
             animation: move 25s infinite alternate ease-in-out;
         }
 
-        .blob-1 {
-            top: -10%;
-            left: -10%;
-            animation-duration: 20s;
-        }
-
-        .blob-2 {
-            bottom: -10%;
-            right: -10%;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
-            animation-duration: 30s;
-            animation-delay: -5s;
-        }
-
-        .blob-3 {
-            top: 40%;
-            left: 30%;
-            width: 400px;
-            height: 400px;
-            background: rgba(99, 102, 241, 0.1);
-            animation-duration: 25s;
-            animation-delay: -2s;
-        }
+        .blob-1 { top: -10%; left: -10%; animation-duration: 20s; }
+        .blob-2 { bottom: -10%; right: -10%; background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%); animation-duration: 30s; animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 30%; width: 400px; height: 400px; background: rgba(99, 102, 241, 0.1); animation-duration: 25s; animation-delay: -2s; }
 
         @keyframes move {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); }
@@ -78,23 +58,69 @@
             100% { transform: translate(0, 0) scale(1) rotate(360deg); }
         }
 
+        /* --- NEW: MOVING ANNOUNCEMENT BANNER --- */
+        .announcement-banner {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 0;
+            position: fixed;
+            top: 72px; /* Sits exactly below navbar */
+            width: 100%;
+            z-index: 999;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            padding-right: 60px;
+        }
+
+        .badge-new {
+            background: #ff4757;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-left: 12px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .announcement-banner:hover .marquee-content { animation-play-state: paused; }
+
         /* --- UI COMPONENTS --- */
         .page-section { display: none; }
         .page-active { display: block; animation: pageIn 0.5s ease forwards; }
         @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 15px 0;
+            z-index: 1000;
         }
 
         .navbar-brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--dark) !important; }
 
         .hero-section {
-            padding: 160px 0 100px;
-            background: transparent; /* Transparent to show moving blobs */
+            padding: 220px 0 100px; /* Increased padding for the banner space */
+            background: transparent;
             position: relative;
         }
 
@@ -112,7 +138,6 @@
         .bento-card {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 30px;
             padding: 40px;
@@ -153,11 +178,7 @@
             transition: 0.3s;
         }
 
-        .btn-main:hover {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.05);
-        }
+        .btn-main:hover { background: var(--primary); color: white; transform: scale(1.05); }
 
         .btn-whatsapp-float {
             position: fixed; bottom: 30px; right: 30px;
@@ -202,13 +223,22 @@
         </div>
     </nav>
 
+    <div class="announcement-banner" onclick="window.open('https://wa.me/919499145221?text=Hello%20Techy%20Store%2C%20I%20want%20to%20register%20for%20the%20Haryana%20Farmer%20Registry%20(Agri%20Stack).%20Please%20guide%20me%20with%20the%20process.', '_blank')">
+        <div class="marquee-content">
+            <div class="marquee-item"><i class="fa-solid fa-wheat-awn"></i> NEW: Haryana Farmer Registry (Agri Stack) Registration is now LIVE! <span class="badge-new">Apply Now</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-file-circle-check"></i> Paperless & Fast Agri Stack Processing - Get Registered Today! <span class="badge-new">Contact Us</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-wheat-awn"></i> NEW: Haryana Farmer Registry (Agri Stack) Registration is now LIVE! <span class="badge-new">Apply Now</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-file-circle-check"></i> Paperless & Fast Agri Stack Processing - Get Registered Today! <span class="badge-new">Contact Us</span></div>
+        </div>
+    </div>
+
     <div id="home" class="page-section page-active">
         <section class="hero-section text-center">
             <div class="container" data-aos="fade-up">
                 <div class="hero-badge">✨ Your Trusted Digital Partner</div>
                 <h1 class="display-3 fw-800 mb-4">Fastest Way to Get Your <br><span class="text-primary">Digital Work Done.</span></h1>
                 <p class="lead text-muted mb-5 mx-auto" style="max-width: 650px;">
-                    We handle everything from PAN Cards to Agricultural Licenses with precision and speed. Simple, Paperless, and Secure.
+                    From Haryana Farmer Registry to PAN Cards and Govt Licenses. Simple, Paperless, and Secure.
                 </p>
                 <div class="d-flex justify-content-center gap-3">
                     <button class="btn-main" onclick="showPage('services')">View Services</button>
@@ -301,6 +331,7 @@
         AOS.init({ duration: 800, once: true });
 
         const allServices = [
+            {icon: 'fa-wheat-awn', title: 'Agri Stack Registry', desc: 'Official Haryana Farmer Registry (Agri Stack) Registration.'},
             {icon: 'fa-id-card', title: 'PAN Card Apply', desc: 'Fresh application or corrections with 100% accuracy.'},
             {icon: 'fa-file-signature', title: 'Exam Registration', desc: 'Form filling for academic and competitive govt exams.'},
             {icon: 'fa-landmark', title: 'Income Certificate', desc: 'Apply for official income proof for various subsidies.'},
@@ -319,14 +350,15 @@
             const homeGrid = document.getElementById('home-featured-grid');
             const fullGrid = document.getElementById('full-services-grid');
 
-            // Clear existing content to prevent duplication
             homeGrid.innerHTML = '';
             fullGrid.innerHTML = '';
 
+            // Render first 4 in Home grid (Agri Stack will be #1)
             allServices.slice(0, 4).forEach(s => {
                 homeGrid.innerHTML += generateCard(s, 'col-lg-3');
             });
 
+            // Render all in Full grid
             allServices.forEach(s => {
                 fullGrid.innerHTML += generateCard(s, 'col-lg-4');
             });
