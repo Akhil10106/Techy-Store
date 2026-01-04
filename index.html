@@ -29,21 +29,15 @@
         /* --- MOVING BACKGROUND EFFECT --- */
         .bg-blobs {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
         }
 
         .blob {
             position: absolute;
-            width: 600px;
-            height: 600px;
+            width: 600px; height: 600px;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
-            filter: blur(80px);
-            border-radius: 50%;
+            filter: blur(80px); border-radius: 50%;
             animation: move 25s infinite alternate ease-in-out;
         }
 
@@ -58,13 +52,28 @@
             100% { transform: translate(0, 0) scale(1) rotate(360deg); }
         }
 
-        /* --- NEW: MOVING ANNOUNCEMENT BANNER --- */
+        /* --- UI COMPONENTS --- */
+        .page-section { display: none; }
+        .page-active { display: block; animation: pageIn 0.5s ease forwards; }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* HEADER (BRANDING ONLY) */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 15px 0;
+            z-index: 1000;
+        }
+        .navbar-brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--dark) !important; }
+
+        /* ANNOUNCEMENT BANNER */
         .announcement-banner {
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: white;
             padding: 12px 0;
             position: fixed;
-            top: 72px; /* Sits exactly below navbar */
+            top: 72px; 
             width: 100%;
             z-index: 999;
             overflow: hidden;
@@ -73,133 +82,129 @@
         }
 
         .marquee-content {
-            display: flex;
-            white-space: nowrap;
-            animation: marquee 25s linear infinite;
+            display: flex; white-space: nowrap;
+            /* FAST SPEED: Changed from 25s to 12s */
+            animation: marquee 12s linear infinite;
         }
 
         .marquee-item {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            padding-right: 60px;
+            display: flex; align-items: center; font-weight: 600; padding-right: 100px;
         }
 
         .badge-new {
-            background: #ff4757;
+            background: #ff4757; color: white; padding: 2px 12px; border-radius: 20px;
+            font-size: 0.75rem; margin-left: 12px; text-transform: uppercase;
+        }
+
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- FLOATING BOTTOM NAVIGATION --- */
+        .bottom-nav-container {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            width: 92%;
+            max-width: 420px;
+        }
+
+        .floating-nav {
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 8px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .nav-link-btn {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 50px;
+            transition: 0.3s;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .nav-link-btn i { font-size: 1.1rem; }
+
+        .nav-link-btn.active {
+            background: var(--primary);
             color: white;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            margin-left: 12px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        .nav-link-btn:hover:not(.active) { color: white; }
+        
+        .nav-whatsapp { color: #25d366 !important; }
+        .nav-whatsapp:hover { background: rgba(37, 211, 102, 0.1) !important; }
 
-        .announcement-banner:hover .marquee-content { animation-play-state: paused; }
-
-        /* --- UI COMPONENTS --- */
-        .page-section { display: none; }
-        .page-active { display: block; animation: pageIn 0.5s ease forwards; }
-        @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .navbar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 15px 0;
-            z-index: 1000;
-        }
-
-        .navbar-brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--dark) !important; }
-
+        /* HERO SECTION */
         .hero-section {
-            padding: 220px 0 100px; /* Increased padding for the banner space */
+            padding: 220px 0 100px;
             background: transparent;
             position: relative;
         }
 
         .hero-badge {
-            background: white;
-            padding: 8px 20px;
-            border-radius: 50px;
+            background: white; padding: 8px 20px; border-radius: 50px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            font-weight: 600;
-            color: var(--primary);
-            display: inline-block;
-            margin-bottom: 20px;
+            font-weight: 600; color: var(--primary); display: inline-block; margin-bottom: 20px;
         }
 
         .bento-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
+            background: var(--card-bg); backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 30px;
-            padding: 40px;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
-            cursor: pointer;
+            border-radius: 30px; padding: 40px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%; cursor: pointer;
         }
 
         .bento-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-10px); background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 30px 60px rgba(99, 102, 241, 0.1);
         }
 
         .service-icon {
             width: 60px; height: 60px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
+            border-radius: 18px; display: flex; align-items: center; justify-content: center;
             color: white; font-size: 1.5rem; margin-bottom: 25px;
         }
 
         .trust-banner {
-            background: var(--dark);
-            color: white;
-            padding: 30px 0;
-            margin-bottom: 80px;
-            border-radius: 24px;
+            background: var(--dark); color: white; padding: 30px 0;
+            margin-bottom: 80px; border-radius: 24px;
         }
 
         .btn-main {
-            background: var(--dark);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 18px;
-            font-weight: 600;
-            border: none;
-            transition: 0.3s;
+            background: var(--dark); color: white; padding: 15px 40px;
+            border-radius: 18px; font-weight: 600; border: none; transition: 0.3s;
         }
 
-        .btn-main:hover { background: var(--primary); color: white; transform: scale(1.05); }
+        .btn-main:hover { background: var(--primary); transform: scale(1.05); color: white; }
 
         .btn-whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px;
-            width: 65px; height: 65px;
-            background: #25d366;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 2rem;
-            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3);
-            z-index: 9999;
-            text-decoration: none;
+            position: fixed; bottom: 105px; right: 30px;
+            width: 65px; height: 65px; background: #25d366;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 2rem; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3);
+            z-index: 9999; text-decoration: none;
         }
 
         .step-circle {
-            width: 40px; height: 40px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold;
-            margin-bottom: 15px;
+            width: 40px; height: 40px; background: var(--primary);
+            color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; margin-bottom: 15px;
         }
     </style>
 </head>
@@ -212,23 +217,32 @@
     </div>
 
     <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#" onclick="showPage('home')">
+        <div class="container justify-content-center">
+            <a class="navbar-brand m-0" href="#" onclick="updatePage('home')">
                 <span class="text-primary">TECHY</span>STORE
             </a>
-            <div class="ms-auto">
-                <button class="btn btn-link text-dark fw-bold text-decoration-none px-3" onclick="showPage('home')">Home</button>
-                <button class="btn btn-main btn-sm rounded-pill" onclick="showPage('services')">All Services</button>
-            </div>
         </div>
     </nav>
 
-    <div class="announcement-banner" onclick="window.open('https://wa.me/919499145221?text=Hello%20Techy%20Store%2C%20I%20want%20to%20register%20for%20the%20Haryana%20Farmer%20Registry%20(Agri%20Stack).%20Please%20guide%20me%20with%20the%20process.', '_blank')">
+    <div class="bottom-nav-container">
+        <nav class="floating-nav">
+            <button class="nav-link-btn active" id="btn-home" onclick="updatePage('home')">
+                <i class="fa-solid fa-house"></i> Home
+            </button>
+            <button class="nav-link-btn" id="btn-services" onclick="updatePage('services')">
+                <i class="fa-solid fa-layer-group"></i> Services
+            </button>
+            <button class="nav-link-btn nav-whatsapp" onclick="window.open('https://wa.me/919499145221?text=Hello%20Techy%20Store%2C%20I%20need%20help%20with%20digital%20services.', '_blank')">
+                <i class="fa-brands fa-whatsapp"></i> Chat
+            </button>
+        </nav>
+    </div>
+
+    <div class="announcement-banner" onclick="window.open('https://wa.me/919499145221', '_blank')">
         <div class="marquee-content">
-            <div class="marquee-item"><i class="fa-solid fa-wheat-awn"></i> NEW: Haryana Farmer Registry (Agri Stack) Registration is now LIVE! <span class="badge-new">Apply Now</span></div>
-            <div class="marquee-item"><i class="fa-solid fa-file-circle-check"></i> Paperless & Fast Agri Stack Processing - Get Registered Today! <span class="badge-new">Contact Us</span></div>
-            <div class="marquee-item"><i class="fa-solid fa-wheat-awn"></i> NEW: Haryana Farmer Registry (Agri Stack) Registration is now LIVE! <span class="badge-new">Apply Now</span></div>
-            <div class="marquee-item"><i class="fa-solid fa-file-circle-check"></i> Paperless & Fast Agri Stack Processing - Get Registered Today! <span class="badge-new">Contact Us</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-wheat-awn"></i> NEW: Haryana Farmer Registry (Agri Stack) Registration LIVE! <span class="badge-new">Apply Now</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-file-circle-check"></i> Paperless & Fast Agri Stack Processing <span class="badge-new">Contact Us</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-wheat-awn"></i> NEW: Haryana Farmer Registry (Agri Stack) Registration LIVE! <span class="badge-new">Apply Now</span></div>
         </div>
     </div>
 
@@ -241,8 +255,8 @@
                     From Haryana Farmer Registry to PAN Cards and Govt Licenses. Simple, Paperless, and Secure.
                 </p>
                 <div class="d-flex justify-content-center gap-3">
-                    <button class="btn-main" onclick="showPage('services')">View Services</button>
-                    <a href="https://wa.me/919499145221?text=Hello%20Techy%20Store%2C%20I%20visited%20your%20website%20and%20I%20want%20to%20consult%20an%20expert%20regarding%20some%20digital%20service%20work.%20Please%20guide%20me." target="_blank" class="btn btn-outline-dark px-4 py-3 rounded-4 fw-bold">Chat with Expert</a>
+                    <button class="btn-main" onclick="updatePage('services')">View Services</button>
+                    <a href="https://wa.me/919499145221" target="_blank" class="btn btn-outline-dark px-4 py-3 rounded-4 fw-bold">Chat with Expert</a>
                 </div>
             </div>
         </section>
@@ -262,9 +276,6 @@
                     <div class="col-md-7">
                         <h2 class="fw-800 display-5">Top Featured Services</h2>
                         <p class="text-muted">Most requested services by our clients this month.</p>
-                    </div>
-                    <div class="col-md-5 text-md-end">
-                        <button class="btn btn-link text-primary fw-bold text-decoration-none" onclick="showPage('services')">View All Services <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
                 <div class="row g-4" id="home-featured-grid"></div>
@@ -307,17 +318,14 @@
                 <p class="text-muted">Choose a service to start your application via WhatsApp</p>
             </div>
             <div class="row g-4" id="full-services-grid"></div>
-            <div class="text-center mt-5">
-                <button class="btn btn-outline-dark rounded-pill px-5" onclick="showPage('home')">Return to Home</button>
-            </div>
         </div>
     </div>
 
-    <a href="https://wa.me/919499145221?text=Hi%20Techy%20Store%2C%20I%20need%20assistance%20with%20some%20digital%20documentation.%20Are%20you%20available%20to%20chat%3F" class="btn-whatsapp-float" target="_blank">
+    <a href="https://wa.me/919499145221" class="btn-whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <footer class="py-5 border-top" style="background: rgba(255,255,255,0.4); backdrop-filter: blur(10px);">
+    <footer class="py-5 border-top" style="background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); margin-bottom: 100px;">
         <div class="container text-center">
             <h3 class="fw-800 text-primary mb-3">TECHY STORE</h3>
             <p class="text-muted">Professional Digital Services Powered by Technical Expertise.</p>
@@ -349,23 +357,19 @@
         function renderContent() {
             const homeGrid = document.getElementById('home-featured-grid');
             const fullGrid = document.getElementById('full-services-grid');
+            homeGrid.innerHTML = ''; fullGrid.innerHTML = '';
 
-            homeGrid.innerHTML = '';
-            fullGrid.innerHTML = '';
-
-            // Render first 4 in Home grid (Agri Stack will be #1)
             allServices.slice(0, 4).forEach(s => {
                 homeGrid.innerHTML += generateCard(s, 'col-lg-3');
             });
 
-            // Render all in Full grid
             allServices.forEach(s => {
                 fullGrid.innerHTML += generateCard(s, 'col-lg-4');
             });
         }
 
         function generateCard(s, colClass) {
-            const encodedMsg = encodeURIComponent(`Hello Techy Store, I want to apply for: ${s.title}. Please let me know the requirements and charges.`);
+            const encodedMsg = encodeURIComponent(`Hello Techy Store, I want to apply for: ${s.title}`);
             return `
                 <div class="${colClass} col-md-6" data-aos="fade-up">
                     <div class="bento-card" onclick="window.open('https://wa.me/919499145221?text=${encodedMsg}', '_blank')">
@@ -377,9 +381,15 @@
             `;
         }
 
-        function showPage(pageId) {
+        function updatePage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active'));
             document.getElementById(pageId).classList.add('page-active');
+            
+            document.querySelectorAll('.nav-link-btn').forEach(b => b.classList.remove('active'));
+            if(pageId === 'home' || pageId === 'services') {
+                document.getElementById(`btn-${pageId}`).classList.add('active');
+            }
+            
             window.scrollTo(0,0);
         }
 
