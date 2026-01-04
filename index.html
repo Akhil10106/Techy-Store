@@ -15,7 +15,7 @@
             --primary: #6366f1;
             --secondary: #a855f7;
             --dark: #030712;
-            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.6);
         }
 
         body {
@@ -23,28 +23,78 @@
             background-color: #f8fafc;
             color: var(--dark);
             overflow-x: hidden;
+            margin: 0;
         }
 
-        /* Dynamic Page Handling */
+        /* --- MOVING BACKGROUND EFFECT --- */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+            filter: blur(80px);
+            border-radius: 50%;
+            animation: move 25s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            animation-duration: 20s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 30%;
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.1);
+            animation-duration: 25s;
+            animation-delay: -2s;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(50px, -80px) scale(1.1) rotate(120deg); }
+            66% { transform: translate(-40px, 40px) scale(0.9) rotate(240deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(360deg); }
+        }
+
+        /* --- UI COMPONENTS --- */
         .page-section { display: none; }
         .page-active { display: block; animation: pageIn 0.5s ease forwards; }
-        @keyframes pageIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Modern Navbar */
         .navbar {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 15px 0;
         }
 
         .navbar-brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--dark) !important; }
 
-        /* Hero Section */
         .hero-section {
             padding: 160px 0 100px;
-            background: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+            background: transparent; /* Transparent to show moving blobs */
             position: relative;
         }
 
@@ -59,11 +109,11 @@
             margin-bottom: 20px;
         }
 
-        /* Bento Grid & Cards */
         .bento-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 30px;
             padding: 40px;
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -73,7 +123,7 @@
 
         .bento-card:hover {
             transform: translateY(-10px);
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 30px 60px rgba(99, 102, 241, 0.1);
         }
 
@@ -85,7 +135,6 @@
             color: white; font-size: 1.5rem; margin-bottom: 25px;
         }
 
-        /* Trust Banner */
         .trust-banner {
             background: var(--dark);
             color: white;
@@ -94,7 +143,6 @@
             border-radius: 24px;
         }
 
-        /* Buttons */
         .btn-main {
             background: var(--dark);
             color: white;
@@ -123,7 +171,6 @@
             text-decoration: none;
         }
 
-        /* Step Process UI */
         .step-circle {
             width: 40px; height: 40px;
             background: var(--primary);
@@ -136,6 +183,12 @@
     </style>
 </head>
 <body>
+
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -188,7 +241,7 @@
             </div>
         </section>
 
-        <section class="py-5 bg-white">
+        <section class="py-5">
             <div class="container">
                 <div class="row g-4">
                     <div class="col-md-4" data-aos="fade-up">
@@ -199,7 +252,7 @@
                         </div>
                     </div>
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="bento-card" style="background: linear-gradient(135deg, #6366f105, #a855f705);">
+                        <div class="bento-card">
                             <div class="step-circle">2</div>
                             <h4>Quick Processing</h4>
                             <p class="text-muted">Our experts process your application with zero errors.</p>
@@ -234,7 +287,7 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <footer class="py-5 bg-white border-top">
+    <footer class="py-5 border-top" style="background: rgba(255,255,255,0.4); backdrop-filter: blur(10px);">
         <div class="container text-center">
             <h3 class="fw-800 text-primary mb-3">TECHY STORE</h3>
             <p class="text-muted">Professional Digital Services Powered by Technical Expertise.</p>
@@ -266,6 +319,10 @@
             const homeGrid = document.getElementById('home-featured-grid');
             const fullGrid = document.getElementById('full-services-grid');
 
+            // Clear existing content to prevent duplication
+            homeGrid.innerHTML = '';
+            fullGrid.innerHTML = '';
+
             allServices.slice(0, 4).forEach(s => {
                 homeGrid.innerHTML += generateCard(s, 'col-lg-3');
             });
@@ -276,7 +333,6 @@
         }
 
         function generateCard(s, colClass) {
-            // UPDATED THE DYNAMIC TEXT HERE SO EACH SERVICE SENDS A UNIQUE MESSAGE
             const encodedMsg = encodeURIComponent(`Hello Techy Store, I want to apply for: ${s.title}. Please let me know the requirements and charges.`);
             return `
                 <div class="${colClass} col-md-6" data-aos="fade-up">
